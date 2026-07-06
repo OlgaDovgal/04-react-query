@@ -31,7 +31,7 @@ export default function App() {
     placeholderData: keepPreviousData,
   });
   useEffect(() => {
-    if (isSuccess && value && data.results.length === 0) {
+    if (data?.results.length === 0) {
       toast.error("Фільми за таким пошуковим словом не знайдено");
     }
   });
@@ -59,7 +59,7 @@ export default function App() {
       )}
       {data?.results.length > 0 && (
         <MovieGrid
-          movies={data.results}
+          movies={data?.results}
           onSelect={(movie) => setSelectedMovie(movie)}
         />
       )}
