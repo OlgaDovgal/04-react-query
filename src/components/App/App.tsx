@@ -29,12 +29,13 @@ export default function App() {
     queryKey: ["movies", value, page],
     queryFn: () => fetchMovies(value, page),
     placeholderData: keepPreviousData,
+    enabled: value !== "",
   });
   useEffect(() => {
     if (data?.results.length === 0) {
       toast.error("Фільми за таким пошуковим словом не знайдено");
     }
-  });
+  }, [data]);
   const handleSubmit = (value: string) => {
     setValue(value);
     setPage(1);
