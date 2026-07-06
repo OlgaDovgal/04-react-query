@@ -25,7 +25,7 @@ export default function App() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [page, setPage] = useState(1);
   const [value, setValue] = useState("");
-  const { data, isError, isLoading, isSuccess } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ["movies", value, page],
     queryFn: () => fetchMovies(value, page),
     placeholderData: keepPreviousData,
@@ -57,9 +57,9 @@ export default function App() {
           previousLabel="←"
         />
       )}
-      {data?.results.length > 0 && (
+      {data && data.results.length > 0 && (
         <MovieGrid
-          movies={data?.results}
+          movies={data.results}
           onSelect={(movie) => setSelectedMovie(movie)}
         />
       )}
