@@ -25,17 +25,17 @@ export default function App() {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [page, setPage] = useState(1);
   const [value, setValue] = useState("");
-  const { data, isError, isLoading } = useQuery({
+  const { data, isError, isLoading, isSuccess } = useQuery({
     queryKey: ["movies", value, page],
     queryFn: () => fetchMovies(value, page),
     placeholderData: keepPreviousData,
     enabled: value !== "",
   });
   useEffect(() => {
-    if (data?.results.length === 0) {
+    if (isSuccess && data.results.length === 0) {
       toast.error("Фільми за таким пошуковим словом не знайдено");
     }
-  }, [data]);
+  }, [data, isSuccess]);
   const handleSubmit = (value: string) => {
     setValue(value);
     setPage(1);
@@ -58,7 +58,7 @@ export default function App() {
           previousLabel="←"
         />
       )}
-      {data && data.results.length > 0 && (
+      {isSuccess && data.results.length > 0 && (
         <MovieGrid
           movies={data.results}
           onSelect={(movie) => setSelectedMovie(movie)}
